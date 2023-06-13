@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Curried Functions</title>
+</head>
+<body>
+
+
+<script>
+    //Primer 1
+    /*var add = function (a,b){
+        return a+b;
+    };*/
+
+    const add = (a, b) => (a + b);
+
+    /*var addC = function (a){
+        return function (b){
+            return a+b;
+        };
+    };*/
+    const addC = a => b => (a + b);
+
+    var sum1 = add(1, 2); // returns 3
+    var sum2 = addC(1)(2) // returns true
+    //sum2 = sum2(2); // return 3;
+
+    console.log(sum1);
+    console.log(sum2);
+
+    //Primer 2
+    function myFunction() {
+        var a = 0;
+        return function () {
+            return a += 1;
+        }
+    }
+
+    var add2 = myFunction();
+    console.log(add2());
+    console.log(add2());
+    console.log(add2());
+</script>
+
+</body>
+</html>

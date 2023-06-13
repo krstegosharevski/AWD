@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Напишете функциjа коjа го враќа следниот фибоначиев броj за секоj повик:
+
+fib_next() -> returns 1
+fib_next() -> returns 2
+fib_next() -> returns 3
+fib_next() -> returns 5
+fib_next() -> returns 8
+-->
+<script>
+/* Star i nekorisen nachin. =>
+let curr;
+let tmp_curr;
+let flag = 1;
+
+function  fib_next(){
+   if (flag===1){
+       curr = 1;
+       tmp_curr = 1;
+       flag = 0;
+       return curr;
+   }else {
+       let tmp_curr1 = curr;
+       curr = curr+tmp_curr;
+       tmp_curr = tmp_curr1;
+       return curr;
+   }
+}
+console.log(fib_next(), fib_next(), fib_next())
+*/
+//Nov i sofisticiran nachin =>
+let fib_next = (() => {
+    let curr = 1;
+    let tem_curr = 0;
+    return () => {
+        let res = curr+tem_curr;
+        tem_curr = curr;
+        curr = res;
+        return res;
+    }
+})();
+console.log(fib_next(), fib_next(), fib_next())
+
+</script>
+</body>
+</html>

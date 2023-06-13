@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    var hashCode = function (s) {
+        return String(s).split("").reduce(function (a, b) {
+            a = ((a << 5) - a) + b.charCodeAt(0);
+            return a & a
+        }, 0);
+    }
+
+    class Patient {
+        constructor(name) {
+            this.name = name;
+            this.id = hashCode(name);
+        }
+    }
+
+    class CovidPositive extends Patient {
+        constructor(name, date, gender, age, municipality, symptoms = false, hyperglycaemia = false, respiratory_problem = false) {
+            super(name);
+            this.positive = true;
+            this.gender = gender;
+            this.age = age;
+            this.date = date;
+            this.municipality = municipality;
+            this.symptoms = symptoms;
+            this.respiratory_problem = respiratory_problem;
+            this.hyperglycaemia = hyperglycaemia;
+        }
+
+        risk() {
+            if (this.symptoms === true && this.hyperglycaemia === true && this.respiratory_problem === true) {
+                if (this.age > 75 || (this.age > 50 && this.gender === "male")) {
+                    console.log("Patient: " + this.id + " " + this.name + " is with high risk")
+                } else {
+                    console.log("Patient: " + this.id + " " + this.name + " is with average risk")
+                }
+            } else if (this.symptoms === false && this.positive === true && this.hyperglycaemia === true && this.respiratory_problem === true) {
+                console.log("Patient: " + this.id + " " + this.name + " is with high risk")
+            } else if (this.symptoms === true && this.positive === true && (this.respiratory_problem === true || this.hyperglycaemia === true)) {
+                console.log("Patient: " + this.id + " " + this.name + " is with average risk")
+            } else if (this.symptoms === true && this.positive === true && this.respiratory_problem === false && this.hyperglycaemia === false) {
+                console.log("Patient: " + this.id + " " + this.name + " is with low risk")
+            }
+            //Ако нема симптоми и тестот му е позитивен а нема ниту дијабетeс ниту проблеми со респираторниот систем -> low risk (resistant of covid)
+            else if (this.symptoms === false && this.positive === true && this.respiratory_problem === false && this.hyperglycaemia === false) {
+                console.log("Patient: " + this.id + " " + this.name + " is with low risk (resistant of covid)")
+            }
+        }
+
+        get_municipality(){
+            return this.municipality;
+        }
+
+        //toString -> метода за печатење во формат: Patient %id %name is positive/negative
+        toString() {
+            console.log("Patient " + this.id + " " + this.name + " " + (this.positive) ? "e positiven/a" : "ne e positiven/a");
+        }
+    }
+
+    class EHospital{
+        constructor() {
+            this.patients = [];
+            this.number = 0;
+        }
+        add_patient(patient){
+            this.patients.push(patient);
+            this.number++;
+        }
+        //ако датумот на тестирање е пред 15 дена тогаш резултатот од тестот  се менува од позитивен во негативен
+        test_patient(patient){
+            let date1 = patient.date;
+            let date2 = Date.now();
+            let diff_in_ms = Math.abs(date2-date1);
+            let result_date = Math.ceil(diff_in_ms / (1000*60*60*24));
+            if (result_date > 15){
+                patient.positive = false;
+            }
+        }
+        check(){
+            for (let patient of this.patients) {
+                this.test_patient(patient);
+                patient.risk();
+            }
+        }
+        safe_zone(municipality){
+            let n = 0;
+            for (let patient of this.patients) {
+                if (patient.get_municipality() === municipality){
+                    n++;
+                }
+            }
+            var percentage = ((n / (this.patients.length)) * 100).toFixed(2)
+            console.log("You are in " + percentage + "% safe zone ")
+        }
+        print(){
+            for (let patient of this.patients) {
+                console.log(patient);
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

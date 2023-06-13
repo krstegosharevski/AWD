@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let dragon1 = function (name, size, element, baby) {
+        return name + " is a " + size + " dragon that breaths " + element + " and " + baby;
+    };
+
+    let dragon = function (name, size, element) {
+        return name + " is a " + size + " dragon that breaths " + element;
+    };
+
+    let append = function (func, num, args) {
+        return function (x) {
+            args.push(x);
+            if (num === func.length)
+                return func(...args);
+            return append(func, num + 1, args);
+        }
+    };
+
+    let curry = function (func) {
+        /*if (func.length <= 1)
+            return func();*/
+        const args = [];
+        return append(func, 1, args);
+    };
+
+    let curriedDragon = curry(dragon);
+    console.log(curriedDragon('Spyro')('Tiny')('fire'));
+    /*curriedDragon = curriedDragon("What")//("It")("Do")("Baby")
+    curriedDragon = curriedDragon("It")
+    curriedDragon = curriedDragon("Do")
+    curriedDragon = curriedDragon("Baby")
+    console.log(curriedDragon);
+     */
+
+
+
+
+</script>
+</body>
+</html>

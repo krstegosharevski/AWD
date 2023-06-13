@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Напишете JavaScript функциjа наречена difference коjа ´ке ги наjде уникатните елементи од 2 полиња.
+
+Пример како треба да изгледа функцијата:
+
+console.log(difference([1, 2, 3], [100, 2, 1, 10])) -> [ 1, 2, 3, 10, 100]
+-->
+<script>
+    //Ne sofisticirano reshenie.
+    /*function difference(arr1,arr2){
+        let res = [];
+        let counter = 0;
+        for (let e of arr1) {
+            res.push(e);
+        }
+        for (let el of arr2) {
+            for (let i=0; i<arr1.length;i++){
+                if (el === arr1[i]){
+                    counter++;
+                }
+            }
+            if (counter===0){
+                res.push(el);
+            }else {
+                counter = 0;
+            }
+        }
+        return res;
+    }
+    console.log(difference([1, 2, 3], [100, 2, 1, 10]))*/
+
+    //Podobro i posofisticirano reshenie.
+    function flat(niza){
+        let rez = [];
+        for (let i = 0; i < niza.length; i++) {
+            if (Array.isArray(niza[i])){
+                rez = rez.concat(flat(niza[i]));
+            }else {
+                rez.push(niza[i]);
+            }
+        }
+        return rez;
+    }
+
+    function difference(...niza){
+        let dolzina = niza.length;
+        console.log(dolzina);
+
+        let rez = flat(niza);
+        console.log(rez);
+
+        rez = rez.filter((vrednost,index) => {
+            return rez.indexOf(vrednost) === index;
+        })
+        return rez;
+    }
+    console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+</script>
+</body>
+</html>

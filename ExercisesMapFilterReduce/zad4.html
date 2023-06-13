@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    Count the occurrences of distinct elements in the given 2D array.
+    The given input is an array, the elements of which are arrays of strings.
+    The result is an object whose property names are the values from the
+    arrays and their value is the number of their occurrences.
+
+    Input:
+    const input = [
+        ["a", "b", "c"],
+        ["c", "d", "f"],
+        ["d", "f", "g"],
+      ];
+
+    Output:
+     {
+      a: 1,
+      b: 1,
+      c: 2,
+      d: 2,
+      f: 2,
+      g: 1,
+     }
+     */
+    //Your code starts here:
+    const input = [
+        ["a", "b", "c"],
+        ["c", "d", "f"],
+        ["d", "f", "g"],
+    ];
+
+
+    function spojka(array) {
+        let result = []
+        for (let arr of array) {
+            for (let i = 0; i < arr.length; i++) {
+                result.push(arr[i]);
+            }
+        }
+        return result;
+    }
+
+    const concated = spojka(input);
+
+    /*let result = function ifennm(arr){
+        k = {}
+        for (let el of arr) {
+            if (!k[el]){
+                k[el] = 1;
+            }//k.hasOwnProperty(el)
+            else {
+                k[el] += 1;
+            }
+        }
+        return k;
+    }
+*/
+
+    const result = input.flat().reduce((accumulator, currentValue) => {
+        if (accumulator[currentValue]) {
+            accumulator[currentValue] += 1;
+        } else {
+            accumulator[currentValue] = 1;
+        }
+        return accumulator;
+    }, {});
+
+    console.log(result);  //Test case 1/1
+                            // [15p with code lowe then 10lines]
+                            // [5p with code large then 10lines]
+                            // If you have both methods you will have golden point(comment one of them)!
+
+    //The solution:
+    /*
+      const result = input.flat().reduce((accumulator, currentValue) => {
+          if (accumulator[currentValue]) {
+              accumulator[currentValue] += 1;
+          } else {
+              accumulator[currentValue] = 1;
+          }
+          return accumulator;
+      }, {});
+
+      console.log(result);
+    */
+</script>
+</body>
+</html>

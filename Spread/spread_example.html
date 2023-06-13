@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spread</title>
+</head>
+<body>
+
+<script>
+    function spread(x,y,...arg){
+        console.log(x,y,arg);
+    }
+
+    function spreadBonus(a,b,c){
+        console.log(a,b,c);
+    }
+    console.log(1,2,3)
+    spread()
+    spread(1)
+    spread(1,2)
+    spread(1,2,3)
+    spread(1,2,3,4)
+    spread(1,2,3,4,5)
+
+
+    const args = [1,1,5,8];
+    spreadBonus(...args)
+
+</script>
+
+</body>
+</html>

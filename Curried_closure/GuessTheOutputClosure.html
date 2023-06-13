@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    //1.
+    var a = 12;
+    (function () {
+        console.log(a);
+    })();
+    //Your answer: 12
+
+    //2.
+    var b = 5;
+    (function() {
+        var b = 12;
+        console.log(b);
+    })();
+    //Your answer: 12
+
+    //3.
+    var c = 10;
+    var x = (function() {
+        var c = 12;
+        return (function() {
+            console.log(c);
+        });
+    })();
+    x();
+    //Your answer: 12
+
+    //4.
+    var d = 10;
+    var z = (function() {
+        var y = function() {
+            var d = 12;
+        };
+        return function() {
+            console.log(d);
+        }
+    })();
+    z();
+    //Your answer: 10
+
+    //5.
+    var a2 = 10;
+    var x2 = (function() {
+        (function() {
+            a2 = 12; // <<< look carefully at this line.
+        })();
+        return (function() {
+            console.log(a2);
+        });
+    })();
+    x2();
+    //Your answer: 12
+
+    //6.
+    var a3 = 10;
+    (function() {
+        var a3 = 15;
+        window.x3 = function() {
+            console.log(a3);
+        }
+    })();
+    x3();
+    //Your answer: 15
+
+
+</script>
+</body>
+</html>

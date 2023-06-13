@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Креирај функција, која на влез ќе прима две низи составени од стрингови, кои претставуваат состав на два сендвича. Целта на оваа функција е да спореди дали сендвичите се направени од ист тип на леб, така што лебот е секогаш поставен на почетокот и крајот на низата.
+
+Пример како треба да изгледа функцијата:
+
+hasSameBread(
+  ["white bread", "lettuce", "white bread"],
+  ["white bread", "tomato", "white bread"]
+) ➞ true
+-->
+<script>
+    /*'use strict'
+
+    var readline = require('readline');
+    var rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        terminal: false
+    });
+
+    rl.question('', (p1) => {
+        rl.question('', (p2) => {
+            p1 = p1.split(", ")
+            p2 = p2.split(", ")
+
+            console.log(hasSameBread(p1,p2))
+
+            rl.close();
+        })
+    });*/
+
+    const p1 = ["white bread", "lettuce", "white bread"];
+    const p2 = ["white bread", "tomato", "white bread"];
+    const p3 = ["toast", "cheese", "toast"];
+    const p4 = ["brown bread", "cheese", "toast"];
+
+    console.log(hasSameBread(p1,p2))
+    console.log(hasSameBread(p3,p4))
+
+    // DO NOT CHANGE ABOVE THIS LINE!!!!
+
+    function hasSameBread(p1,p2){
+        lastIndex = p2.length-1;
+        if (p1[0]===p2[0] && p1[lastIndex]===p2[lastIndex]){
+            return true;
+        }
+        return false;
+    }
+</script>
+</body>
+</html>

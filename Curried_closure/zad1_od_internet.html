@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    Write a function called specialMultiply which accepts two parameters.
+    If the function is passed both parameters, it should return the product of the two.
+    If the function is only passed one parameter - it should return a function which can
+    later be passed another parameter to return the product.
+    You will have to use closure and arguments to solve this.
+
+    Example:
+    Input: specialMultiply(3,4);  //   Output: 12
+    Input: specialMultiply(3)(4); //   Output: 12
+    Input: specialMultiply(3);    //   Output: function(){}....
+     */
+
+    function specialMultiply(...arg) {
+        if (arg.length === 2){
+            return arg[0]*arg[1];
+        }
+        else return function (c){
+            return arg*c;
+        }
+    }
+
+    console.log(specialMultiply(3,4));
+    console.log(specialMultiply(3)(4))
+
+</script>
+</body>
+</html>

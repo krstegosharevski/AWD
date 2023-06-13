@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Напишете функција dropUntil која прима 2 аргументи:
+    -array (Array): Низа од елементи
+    -predicate: Функција која ќе се извршува врз секој елемент.
+Функцијата треба да ги исфрли елементите од низа се додека не се исполни предикатот.
+
+пример:
+var users = [
+  { "user": "barney",  "active": false },
+  { "user": "fred",    "active": false },
+  { "user": "pebbles", "active": true }
+]
+
+console.log(dropUntil(users, function(o) { return o.active; }) )
+// Output: [ { user: 'pebbles', active: true } ]
+-->
+<script>
+    function dropUntil(array, func){
+        let arr = []
+        let predicate = false;
+        for (let elem of array) {
+            if (!predicate){
+                if (func(elem)){
+                    predicate=true;
+                    arr.push(elem);
+                }
+            }else {
+                arr.push(elem);
+            }
+        }
+        return arr;
+    }
+
+
+    console.log(dropUntil([1, 3, 5, 10], function(o) { return !(o%2); }) )
+    console.log(dropUntil([2, [3], 5, 10], function(o) { return Array.isArray(o); }) )
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    You are given an array of objects representing a collection of employees,
+    each with a name, salary, and department. Your task is to use map, filter,
+    and reduce to calculate the average salary for each department and then
+    return an array of objects containing only the departments that have an average salary above 65000.
+
+    Input:
+    const employees = [
+      { name: "John", salary: 50000, department: "IT" },
+      { name: "Jane", salary: 60000, department: "HR" },
+      { name: "Bob", salary: 55000, department: "IT" },
+      { name: "Sophie", salary: 75000, department: "HR" },
+      { name: "Mike", salary: 65000, department: "IT" },
+      { name: "Emily", salary: 80000, department: "HR" },
+      { name: "David", salary: 70000, department: "IT" },
+    ];
+
+    Output:
+    [
+      { department: 'HR', average: 71666 }
+    ]
+     */
+    //Your code here:
+    const employees = [
+        { name: "John", salary: 50000, department: "IT" },
+        { name: "Jane", salary: 60000, department: "HR" },
+        { name: "Bob", salary: 55000, department: "IT" },
+        { name: "Sophie", salary: 75000, department: "HR" },
+        { name: "Mike", salary: 65000, department: "IT" },
+        { name: "Emily", salary: 80000, department: "HR" },
+        { name: "David", salary: 70000, department: "IT" },
+        { name: "Krste", salary: 500, department: "IT-labs" },
+        { name: "Emka", salary: 10000, department: "IT-labs" },
+    ];
+
+
+    //Your code here:
+    let employees_by_department = employees.reduce((res_obj,obj) => {
+       const department = obj.department;
+       if (!res_obj[department]){
+           res_obj[department] = []
+       }
+       res_obj[department].push(obj);
+       return res_obj;
+    },{})
+    console.log(employees_by_department); //Test case 1/3 [30p]
+
+    //Your code here:
+    let average_salay_by_department = Object.keys(employees_by_department).map(department => {
+        const sum_salary = employees_by_department[department].reduce((vkupna,obj)=>{
+           return vkupna+obj.salary;
+        },0)
+        return {department: department, average: parseInt(sum_salary/employees_by_department[department].length)}
+    })
+    console.log(average_salay_by_department); //Test case 2/3 [30p]
+
+    //Your code here:
+    let result = average_salay_by_department.filter(obj => obj.average>65000);
+    console.log(result); //Test case 3/3 [5p]
+
+
+
+    //The solution of the problem:
+    /*
+    //Dividing by departments
+    const employees_by_department = employees.reduce((new_obj, employee)=>{
+        if(!new_obj[employee.department]){
+          new_obj[employee.department] = []
+        }
+        new_obj[employee.department].push(employee);
+        return new_obj;
+    },{})
+    //console.log(employees_by_department); //Test case 1/3
+
+    //Summing average salary
+    const average_salay_by_department = Object.keys(employees_by_department).map(department => {
+        const sum_salary_by_department = employees_by_department[department].reduce((sum_salary,employee)=>{
+           return sum_salary+employee.salary
+        },0);
+        return {department: department, average: sum_salary_by_department/employees_by_department[department].length}
+    })
+    //console.log(average_salay_by_department); //Test case 2/3
+
+    const result = average_salay_by_department.filter(departmet => departmet.average>65000);
+    console.log(result); //Test case 3/3
+*/
+</script>
+</body>
+</html>

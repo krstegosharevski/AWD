@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Напишете функција select која прима 2 аргументи: објект и низа.
+Низата треба да содржи имиња на клучеви кои треба да се селектираат од објектот.
+Да се врати објект кој ги содржи само тие вредности
+
+Input:
+{"a":1,"b":2,"c":3}
+a, c
+Output:
+{ a: 1, c: 3 }
+
+-->
+<script>
+    'use strict'
+
+    var readline = require('readline');
+    var rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        terminal: false
+    });
+
+    rl.question('', (p1) => {
+        rl.question('', (p2) => {
+            p2 = p2.split(", ")
+            p1 = JSON.parse(p1);
+
+            console.log(select(p1,p2))
+
+            rl.close();
+        })
+    });
+
+    // DO NOT CHANGE ABOVE THIS LINE
+
+    // Write your solution here!!!
+    function select(o,a){
+        let object_finall = {}
+        for (let k in a){
+            if (o.hasOwnProperty(k)){
+                object_finall[k] = o[k];
+            }
+        }
+        return object_finall;
+    }
+</script>
+
+</body>
+</html>

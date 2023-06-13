@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Потребно е да се креира Е-Болница која ќе се погрижи за заболените од корона вирусот. За таа цел се потребни најпрво помошни класи,  Patient е класа во која се чува id-то на тестот (хеширање на името) и името. Оваа класа е наследена од класата CovidPositive каде како дополнителни атрибути се чуваат пол, годишна возраст на пациентот, датум на тестирањe, резултатите од тестот дали е позитивен или негативен (секој внесен пациент на почетокот има позитивен тест),  симптоми , дијабетeс или проблеми со респираторен систем(true/false). Функции кои треба да се имплементираат во оваа класа:
+
+
+Функција за ризик -> Печати колкав е ризикот во зависност од:
+Ако има симптоми, дијабетeс, проблеми со респираторниот систем и е над 75 години или над 50 години и е од машки пол -> high risk, во другиот случај -> average risk
+Ако нема симптоми, а тестот му е позитивен и има дијабетeс, проблеми со респираторниот систем -> high risk
+Ако има симптоми и тестот му е позитивен а има или дијабетeс или проблеми со респираторниот систем -> average risk
+Ако има симптоми и тестот му е позитивен а нема ниту дијабетeс ниту проблеми со респираторниот систем -> low risk
+Ако нема симптоми и тестот му е позитивен а нема ниту дијабетeс ниту проблеми со респираторниот систем -> low risk (resistant of covid)
+toString -> метода за печатење во формат: Patient %id %name is positive/negative
+
+EHospital класата е составена од листа од пациенти (тестирани на корона вирусот), каде е потребно да се имплементираат следните функционалности:
+додади пациент (add_patient): додавање пациент во листата
+тестирај пациент (test_patient): ако датумот на тестирање е пред 15 дена тогаш резултатот од тестот  се менува од позитивен во негативен
+проверка на пациентите (check()): се проверуваат сите пациенти со тоа што најпрво секој од нив се тестира, а потоа се печати ризикот кој го имаат
+проверка дали дадената општина како аргумент е во безбедна зона (safe_zone): се печати процентот на пациенти кои се негативни во дадената општина
+Печати (print()): Печати го секој пациент од листата
+
+Test:
+var hospital = new EHospital()
+var a = new CovidPositive("Dejan", new Date(2020,10,17),"male",50,"Aerodrom", true,true,true)
+var b = new CovidPositive("Petar", new Date(2020,10,17),"male",75,"Aerodrom", true,true,true)
+var c = new CovidPositive("Sanja", new Date(2020,11,20),"female",50,"Dracevo", true,true,true)
+var d = new CovidPositive("Georgina", new Date(2020,11,20),"female",25,"Aerodrom", false,false,false)
+var e = new CovidPositive("Spase", new Date(2020,11,9),"male",50,"Aerodrom", true,false,true)
+var g = new CovidPositive("Dragi", new Date(2020,11,20),"male",50,"Aerodrom", false,false,false)
+
+
+
+hospital.add_patient(a)
+hospital.add_patient(b)
+hospital.add_patient(c)
+hospital.add_patient(d)
+hospital.add_patient(e)
+hospital.add_patient(g)
+
+
+
+
+hospital.check()
+console.log()
+hospital.print()
+console.log()
+
+
+
+hospital.safe_zone("Aerodrom")
+
+Output:
+Patient: -1038130864 Dejan is with average risk
+Patient: -1038130864 Petar is with average risk
+Patient: -1038130864 Sanja is with average risk
+Patient: -1038130864 Spase is with average risk
+
+CovidPositive {
+  name: 'Dejan',
+  id: -1038130864,
+  positive: true,
+  gender: 'male',
+  age: 50,
+  date: 2020-11-17T00:00:00.000Z,
+  municipality: 'Aerodrom',
+  symptoms: true,
+  respiratory_problem: true,
+  hyperglycaemia: true }
+CovidPositive {
+  name: 'Petar',
+  id: -1038130864,
+  positive: true,
+  gender: 'male',
+  age: 75,
+  date: 2020-11-17T00:00:00.000Z,
+  municipality: 'Aerodrom',
+  symptoms: true,
+  respiratory_problem: true,
+  hyperglycaemia: true }
+CovidPositive {
+  name: 'Sanja',
+  id: -1038130864,
+  positive: false,
+  gender: 'female',
+  age: 50,
+  date: 2020-12-20T00:00:00.000Z,
+  municipality: 'Dracevo',
+  symptoms: true,
+  respiratory_problem: true,
+  hyperglycaemia: true }
+CovidPositive {
+  name: 'Georgina',
+  id: -1038130864,
+  positive: false,
+  gender: 'female',
+  age: 25,
+  date: 2020-12-20T00:00:00.000Z,
+  municipality: 'Aerodrom',
+  symptoms: false,
+  respiratory_problem: false,
+  hyperglycaemia: false }
+CovidPositive {
+  name: 'Spase',
+  id: -1038130864,
+  positive: true,
+  gender: 'male',
+  age: 50,
+  date: 2020-12-09T00:00:00.000Z,
+  municipality: 'Aerodrom',
+  symptoms: true,
+  respiratory_problem: false,
+  hyperglycaemia: true }
+CovidPositive {
+  name: 'Dragi',
+  id: -1038130864,
+  positive: false,
+  gender: 'male',
+  age: 50,
+  date: 2020-12-20T00:00:00.000Z,
+  municipality: 'Aerodrom',
+  symptoms: false,
+  respiratory_problem: false,
+  hyperglycaemia: false }
+
+You are in 33.33% safe zone
+-->
+<script>
+    var hashCode = function(s){
+        return  String(s).split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+    }
+
+    class Patient{
+        constructor(name) {
+            this.name = name;
+            this.id = hashCode(name);
+        }
+    }
+
+    class CovidPositive extends Patient{
+        constructor(name, date, gender, age, municipality, symptoms = false, respiratory_problem = false, hyperglycaemia = false, positive = true) {
+            super();
+            this.name = name;
+            this.positive = positive;
+            this.gender = gender;
+            this.age = age;
+            this.date = date;
+            this.municipality = municipality;
+            this.symptoms = symptoms;
+            this.respiratory_problem = respiratory_problem;
+            this.hyperglycaemia = hyperglycaemia;
+
+        }
+
+        risk(){
+            if (this.symptoms===true && this.hyperglycaemia ===true && this.respiratory_problem===true){
+                if (this.age>75 || (this.age>50 && this.gender==="male")){
+                    console.log("Patient: " + this.id + " " + this.name + " is with high risk")
+                } else {
+                    console.log("Patient: " + this.id + " " + this.name + " is with average risk")
+                }
+            }
+            else if (this.symptoms===false && this.positive===true && this.hyperglycaemia===true && this.respiratory_problem===true){
+                console.log("Patient: " + this.id + " " + this.name + " is with high risk")
+            }
+            else if (this.symptoms===true && this.positive === true && (this.respiratory_problem===true || this.hyperglycaemia===true)){
+                console.log("Patient: " + this.id + " " + this.name + " is with average risk")
+            }
+            else if (this.symptoms === true && this.positive === true && this.respiratory_problem===false && this.hyperglycaemia===false){
+                console.log("Patient: " + this.id + " " + this.name + " is with low risk")
+            }
+            //Ако нема симптоми и тестот му е позитивен а нема ниту дијабетeс ниту проблеми со респираторниот систем -> low risk (resistant of covid)
+            else if (this.symptoms===false && this.positive===true && this.respiratory_problem===false && this.hyperglycaemia===false){
+                console.log("Patient: " + this.id + " " + this.name + " is with low risk (resistant of covid)")
+            }
+        }
+        get_municipality() {
+            return this.municipality;
+        }
+        set_municipality(municipality){
+            this.municipality = municipality;
+        }
+        toString(){
+            //метода за печатење во формат: Patient %id %name is positive/negative
+            console.log("Patient: " + this.id + " " + this.name + " " + (this.positive)? "e positiven/a" : "ne e positiven/a");
+        }
+    }
+
+    class EHospital{
+        constructor() {
+            this.patients = [];
+            this.number = 0;
+        }
+        add_patient(patient){
+            this.patients.push(patient);
+            this.number++;
+        }
+        //The diffTime variable calculates the difference in milliseconds between the two dates, date1 and date2. To convert this difference from milliseconds to days, it is divided by the number of milliseconds in a day, which is 1000 * 60 * 60 * 24.
+        //1000 is used to convert the difference from milliseconds to seconds, 60 is used to convert seconds to minutes, 60 again is used to convert minutes to hours, and finally 24 is used to convert hours to days.
+        //The Math.ceil function rounds up the result to the nearest whole number, so even if the difference in time is a fraction of a day, it will be rounded up to a whole day.
+        //The final result is the number of whole days between the two dates.
+
+        test_patient(patient){
+            let date1 = patient.date;
+            let date2 = Date.now();
+            let diffMiliseconds = Math.abs(date1-date2);
+            let days = Math.ceil(diffMiliseconds / (1000*60*60*24));
+            if (days > 15){
+                patient.positive = false;
+            }
+        }
+        //проверка на пациентите (check()): се проверуваат сите пациенти со
+        // тоа што најпрво секој од нив се тестира, а потоа се печати ризикот кој го имаат
+        check(){
+            for (let patientsKey of this.patients) {
+                this.test_patient(patientsKey);
+                patientsKey.risk();
+            }
+        }
+
+        //проверка дали дадената општина како аргумент е во безбедна зона (safe_zone): се печати
+        // процентот на пациенти кои се негативни во дадената општина
+        safe_zone(municipality) {
+            var n = 0
+            for (var p of this.patients) {
+                if ((p.get_municipality() === municipality) && !p.positive) {
+                    n++
+                }
+            }
+            var percentage = ((n / (this.patients.length)) * 100).toFixed(2);
+            console.log("You are in " + percentage + "% safe zone ");
+        }
+
+
+        //Печати (print()): Печати го секој пациент од листата
+        print(){
+            for (let patientsKey of this.patients) {
+                console.log(patientsKey);
+            }
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

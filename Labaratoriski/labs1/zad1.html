@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Креирај функција која како аргумент ќе содржи низа од броеви, целта на оваа функција е да ги инкрементира сите елементи од листа.
+
+Пример како треба да изгледа функцијата:
+
+incrementItems([0, 1, 2, 3]) ➞ [1, 2, 3, 4]
+
+-->
+<script>
+    'use strict'
+
+   /* var readline = require('readline');
+    var rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        terminal: false
+    });
+
+    rl.question('', (p1) => {
+        p1 = p1.split(", ")
+
+        //console.log(incrementItems(p1))
+
+        rl.close();
+
+    });*/
+    let arr = ["1","2","2"];
+    console.log(incrementItems(arr));
+
+    // DO NOT CHANGE ABOVE THIS LINE!!!!
+
+    function incrementItems(p1){
+        let res = p1.map(el => {
+            //For example, a radix of 10 converts from a decimal number, 8 converts from octal, 16 from hexadecimal, and so on.
+            return parseInt(el,10);
+        });
+        res = res.map(el => el+1);
+        return res;
+    }
+</script>
+</body>
+</html>

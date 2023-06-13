@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Да се развие објект наречен Character. За секој објект потребно е да се чува име на карактерот,
+неговите hitpoints. Името се задава како параметар, додека иницијално секој карактер има 100
+hitpoints.
+За објектот Character потребно е да се креира метода attack, која напаѓа друг објект од типот
+Character. При напад, карактерот кој напаѓа му нанесува штета на вториот карактер, односно ги
+намалува hitpoint-ите на вториот карактер за 5. Секој напад има 30% шанси да нанесе двојно
+штета.
+Дополнително за секој карактер да се креира метода status која го печати името на карактерот
+и неговите моментални hitpoints.
+Во поле се креираат 3 објекти од типот Character, кои се во меѓусебен дуел. Во еден круг, еден
+карактер може да нанесе 1 удар на произволен противник. Еден карактер умира ако неговиот
+hitpoint е 0. Играта завршува кога останува само 1 жив карактер, кој се печати на конзила со
+порака Winner: name, hitpoints!
+
+-->
+<script>
+    /*class Character{
+        constructor(name) {
+            this.name = name;
+            this.hitpoints = 100;
+        }
+
+        attack(otherCharacter) {
+            let damage = 5;
+            if (Math.random() < 0.3) {
+                damage *= 2;
+            }
+            otherCharacter.hitpoints -= damage;
+        }
+
+        status(){
+            console.log(this.name+" - "+this.hitpoints);
+        }
+    }
+ */
+    /*Во поле се креираат 3 објекти од типот Character, кои се во меѓусебен дуел. Во еден круг, еден
+    карактер може да нанесе 1 удар на произволен противник. Еден карактер умира ако неговиот
+    hitpoint е 0. Играта завршува кога останува само 1 жив карактер, кој се печати на конзила со
+    порака Winner: name, hitpoints!*/
+   /* let characters = [new Character("Drago"), new Character("Buri"), new Character("TObby")];
+    let flag=1
+    while (flag>0){
+    //Fali alive proverka!
+        for (var i=0;i<characters.length;i++){
+            let deffender = characters[Math.floor(Math.random() * characters.length)];
+            while (deffender===characters[i]){
+                deffender = characters[Math.floor(Math.random() * characters.length)];
+            }
+            characters[i].attack(deffender);
+            if (characters[0].hitpoints>0 && characters[1].hitpoints===0 && characters[2].hitpoints===0){
+                console.log("Winner: ")
+                characters[0].status();
+                flag=0;
+
+            } else if (characters[0].hitpoints===0 && characters[1].hitpoints>0 && characters[2].hitpoints===0){
+                console.log("Winner: ")
+                characters[1].status();
+                flag=0
+
+            } else {
+                console.log("Winner: ")
+                characters[2].status();
+                flag=0
+
+            }
+        }
+    } */
+
+    class Character {
+        constructor(name, hitpoints=100) {
+            this.name = name;
+            this.hitpoints = hitpoints;
+        }
+
+        attack(otherCharacter) {
+            let damage = 5;
+            if (Math.random() < 0.3) {
+                damage *= 2;
+            }
+            otherCharacter.hitpoints -= damage;
+        }
+
+        status(){
+            console.log(this.name+" - "+this.hitpoints);
+        }
+
+        isAlive() {
+            return this.hitpoints > 0;
+        }
+    }
+
+    const characters = [
+        new Character("Drago"),
+        new Character("Bury"),
+        new Character("TObby")
+    ];
+
+    function randomCharacter() {
+        const aliveCharacters = characters.filter(char => char.isAlive());
+        return aliveCharacters[Math.floor(Math.random() * aliveCharacters.length)];
+    }
+
+    function round() {
+        const attacker = randomCharacter();
+        const defender = randomCharacter();
+        if (attacker !== defender) {
+            attacker.attack(defender);
+        }
+    }
+
+    function game() {
+        while (characters.filter(char => char.isAlive()).length > 1) {
+            round();
+        }
+
+        const winner = characters.find(char => char.isAlive());
+        console.log(`Winner: ${winner.name}, hitpoints: ${winner.hitpoints}!`);
+    }
+
+    game();
+</script>
+</body>
+</html>

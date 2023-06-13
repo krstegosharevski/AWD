@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+Потребно е да се креира Air Pollution онлајн алатка, која ќе одредува колку дадената област е еко т.е не е загадена. За тоа најпрво е потребна помошна класа ObjFilters, која ќе ги содржи id-то на објектот (со хеширање на името), име на објект и  дали има или нема поставено филтри за издувните гасови (на почетокот не се поставени филтрите - false). Оваа класа е наследувана од класата PollutionObject во која како информации се чуваат датумот на изградба и општината во која се наоѓа објектот воедно како важни загадувачи на воздухот се земаат следниве метрики: PM10, NO2, SO2, O3, температура за нив се чува информација (true/false) во зависност од тоа дали објектот при производство создава издувни гасови во кои има појава на некоја од наведените метрики. Функции кои треба да се имплементираат во оваа класа:
+
+Функција за ризик -> Печати колкав е ризикот за овој објект да го загадува воздухот во зависност од:
+
+Ако има појава на PM10, NO2, SO2, O3 и температурата е помала од 10 степени -> high risk
+Ако има појава на PM10, NO2, SO2, O3 и температурата е поголема од 10 степени -> аverage risk
+Ако има појава на NO2, SO2, O3 -> аverage risk
+Ако има појава на PM10, NO2, O3 -> аverage risk
+Ако има појава на SO2, O3 или има појава на PM10, NO2 и температурата е поголема од 10 степени -> low risk
+Ако нема појава на ниту една метрика ->low risk (eco friendly)
+toString -> метода за печатење во формат: Object %id %name has/hasn't got  filters
+AirPollution класата е составена од листа од објекти, каде е потребно да се имплементираат следните функционалности:
+
+додади објект (add_object): додавање објект во листата
+тестирај објект (test_object): секој објект има рок од три месеци да инсталира филтри, па ако датумот на изградба бил пред повеќе од три месеци тогаш филтрите се сигурно додадени
+проверка на објектите (check()): се проверуваат сите објекти со тоа што најпрво секој од нив се тестира, а потоа се печати ризикот кој го имаат
+проверка дали дадената општина како аргумент е во безбедна зона (safe_zone): се печати процентот на објекти со филтри во дадента општина
+печати (print()): се печати секој објект од листата
+
+Test:
+var airpollution = new AirPollution()
+var a = new PollutionObject("Alkaloid",new Date(2020,11,5),"Aerodrom",30,true,true,true,true)
+var b = new PollutionObject("Feni",new Date(2020,7,5),"Aerodrom",25,false,false,true,true)
+var c = new PollutionObject("FormaNova",new Date(2020,9,5),"Aerodrom",15,true,true,false,false)
+
+
+airpollution.add_object(a)
+airpollution.add_object(b)
+airpollution.add_object(c)
+
+airpollution.check()
+console.log()
+airpollution.print()
+console.log()
+airpollution.safe_zone("Aerodrom")
+
+Output:
+The object  -1038130864 Alkaloid pollutes the air at average risk
+The object  -1038130864 Feni pollutes the air at low risk
+The object  -1038130864 FormaNova pollutes the air at low risk
+
+PollutionObject {
+  name: 'Alkaloid',
+  id: -1038130864,
+  filters: false,
+  date: 2020-12-05T00:00:00.000Z,
+  temperature: 30,
+  municipality: 'Aerodrom',
+  PM10: true,
+  NO2: true,
+  O3: true,
+  SO2: true }
+PollutionObject {
+  name: 'Feni',
+  id: -1038130864,
+  filters: true,
+  date: 2020-08-05T00:00:00.000Z,
+  temperature: 25,
+  municipality: 'Aerodrom',
+  PM10: false,
+  NO2: false,
+  O3: true,
+  SO2: true }
+PollutionObject {
+  name: 'FormaNova',
+  id: -1038130864,
+  filters: false,
+  date: 2020-10-05T00:00:00.000Z,
+  temperature: 15,
+  municipality: 'Aerodrom',
+  PM10: true,
+  NO2: true,
+  O3: false,
+  SO2: false }
+
+You are in 33.33% safe zone
+-->
+<script>
+    var hashCode = function (s) {
+        return String(s).split("").reduce(function (a, b) {
+            a = ((a << 5) - a) + b.charCodeAt(0);
+            return a & a
+        }, 0);
+    }
+
+    class ObjFilters {
+        constructor(name, filters = false) {
+            this.name = name;
+            this.id = hashCode(name);
+            this.filters = filters;
+        }
+    }
+
+    class PollutionObject extends ObjFilters {
+        constructor(name, date, municipality, temperature, PM10, NO2, O3, SO2) {
+            super();
+            this.name = name;
+            this.filters = false;
+            this.date = date;
+            this.temperature = temperature;
+            this.municipality = municipality;
+            this.PM10 = PM10;
+            this.NO2 = NO2;
+            this.O3 = O3;
+            this.SO2 = SO2;
+        }
+
+        risk() {
+            //Ако има појава на PM10, NO2, SO2, O3 и температурата е помала од 10 степени -> high risk
+            if (this.PM10 && this.NO2 && this.SO2 && this.O3 && this.temperature < 10) {
+                console.log("The object " + this.id + " " + this.name + " pollutes the air at high risk")
+            }
+            //Ако има појава на PM10, NO2, SO2, O3 и температурата е поголема од 10 степени -> аverage risk
+            else if (this.PM10 && this.NO2 && this.SO2 && this.O3 && this.temperature > 10) {
+                console.log("The object " + this.id + " " + this.name + " pollutes the air at аverage risk")
+            }
+            //Ако има појава на NO2, SO2, O3 -> аverage risk
+            else if (this.NO2 && this.SO2 && this.O3) {
+                console.log("The object " + this.id + " " + this.name + " pollutes the air at аverage risk")
+            }
+            //Ако има појава на PM10, NO2, O3 -> аverage risk
+            else if (this.PM10 && this.NO2 && this.O3) {
+                console.log("The object " + this.id + " " + this.name + " pollutes the air at аverage risk")
+            }
+            //Ако има појава на SO2, O3 или има појава на PM10, NO2 и температурата е поголема од 10 степени -> low risk
+            else if (((this.SO2 && this.O3) || (this.PM10 && this.NO2)) && this.temperature > 10) {
+                console.log("The object " + this.id + " " + this.name + " pollutes the air at low risk")
+            }
+            //Ако нема појава на ниту една метрика ->low risk (eco friendly)
+            else if (!this.PM10 && !this.NO2 && !this.SO2 && !this.O3) {
+                console.log("The object " + this.id + " " + this.name + " pollutes the air at low risk (eco friendly)")
+            }
+        }
+
+        get_municipality(){
+            return this.municipality;
+        }
+
+        //Object %id %name has/hasn't got  filters
+        toString() {
+            console.log("Object " + this.id + " " + this.name + (this.filters) ? "has got filters" : "hasn't got filters");
+        }
+    }
+
+    class AirPollution{
+        constructor() {
+            this.objects = [];
+            this.number_obj = 0;
+        }
+        add_object(obj){
+            this.objects.push(obj);
+            this.number_obj++;
+        }
+        test_object(obj){
+            let date1 = obj.date;
+            let date2 = Date.now();
+            let diffMilissec = Math.abs(date2-date1);
+            let months = Math.ceil(diffMilissec / (1000*60*60*24*30));
+            if (months>3){
+                obj.filters = true;
+            }
+        }
+        check(){
+            for (let object of this.objects) {
+                this.test_object(object);
+                object.risk();
+            }
+        }
+        safe_zone(municipality){
+            let count_filters = 0
+            for (let object of this.objects) {
+                if (object.municipality === municipality){
+                    if (object.filters === true){
+                        count_filters++;
+                    }
+                }
+            }
+            var percentage = ((count_filters / (this.objects.length)) * 100).toFixed(2)
+            console.log("You are in " + percentage + "% safe zone ")
+        }
+        print(){
+            for (let object of this.objects) {
+                console.log(object);
+            }
+        }
+    }
+</script>
+</body>
+</html>

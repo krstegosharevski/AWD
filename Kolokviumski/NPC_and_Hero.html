@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class NPC{
+        constructor(name,hitpoints) {
+            this.name = name;
+            this.hitpoints = hitpoints;
+        }
+    }
+    class Hero extends NPC{
+        constructor(name,hitpoints=100,damage=10) {
+            super(name,hitpoints);
+            this.damage = damage
+        }
+
+        attack(defender){
+            defender.hitpoints -= this.damage;
+        }
+
+        status(){
+            console.log(this.name+" "+this.hitpoints);
+        }
+
+    }
+</script>
+</body>
+</html>
